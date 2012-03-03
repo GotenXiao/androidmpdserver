@@ -1,0 +1,111 @@
+package uk.co.gotenxiao.androidmusemote;
+
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ToggleButton;
+
+public class AndroidMuseMoteMain extends Activity implements OnClickListener
+{
+    private static final String LOG_TAG = "AndroidMuseMote";
+    private ToggleButton toggleButton = null;
+    private AndroidMuseMoteService mService = null;
+    private boolean mIsBound = false;
+
+    private ServiceConnection mConnection = new ServiceConnection()
+    {
+        public void onServiceConnected(ComponentName className, IBinder service)
+        {
+            mService = ((AndroidMuseMoteService.LocalBinder)service).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName className)
+        {
+            mService = null;
+        }
+    };
+
+    void doBindService()
+    {
+        bindService(new Intent(this, AndroidMuseMoteService.class), mConnection, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if (mIsBound)
+        {
+            unbindService(mConnection);
+            mIsBound = false;
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+
+        toggleButton = (ToggleButton) findViewById(R.id.button);
+        toggleButton.setOnClickListener(this);
+        toggleButton.setChecked(isRunning());
+
+        doBindService();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        doUnbindService();
+    }
+
+    public boolean isRunning()
+    {
+        return (mService != null && mService.server != null && mService.server.running);
+    }
+
+    public void startServer()
+    {
+        if (isRunning())
+        {
+            return;
+        }
+
+        mService.startServer();
+    }
+
+    public void stopServer()
+    {
+        if (!isRunning())
+        {
+            return;
+        }
+
+        mService.stopServer();
+    }
+
+    public void toggleServer()
+    {
+        if (!isRunning())
+        {
+            startServer();
+        } else
+        {
+            stopServer();
+        }
+    }
+
+    public void onClick(View v)
+    {
+        toggleServer();
+        toggleButton.setChecked(isRunning());
+    }
+}
