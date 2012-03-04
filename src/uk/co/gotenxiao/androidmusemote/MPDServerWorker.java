@@ -124,6 +124,17 @@ public class MPDServerWorker extends Thread
         send(msg);
     }
 
+    private void error(int error_num, String command, String message)
+    {
+        int currentIdx = mCommandStack.size();
+        if (mProcessingCommandStack)
+        {
+            currentIdx = mCommandStackIndex;
+        }
+
+        error(error_num, currentIdx, command, message);
+    }
+
     private void send(String message)
     {
         try
@@ -238,13 +249,7 @@ public class MPDServerWorker extends Thread
             command = mSplitter.next();
         } else
         {
-            int currentIdx = mCommandStack.size();
-            if (mProcessingCommandStack)
-            {
-                currentIdx = mCommandStackIndex;
-            }
-
-            error(ACK_ERROR_UNKNOWN, currentIdx, "", String.format("unknown command \"%s\"", line));
+            error(ACK_ERROR_UNKNOWN, "", String.format("unknown command \"%s\"", line));
             return false;
         }
 
@@ -345,6 +350,9 @@ public class MPDServerWorker extends Thread
         {
             mPlayerAPI.stop(mContext);
             ok();
+        } else
+        {
+            error(ACK_ERROR_UNKNOWN, mCommand, String.format("unknown command \"%s\"", line));
         }
 
         return false;
