@@ -371,6 +371,9 @@ public class MPDServerWorker extends Thread
                 if (line != null)
                 {
                     handleCommand(line);
+                } else
+                {
+                    break;
                 }
             }
         } catch (Exception e)
