@@ -85,4 +85,39 @@ public class PowerAMP implements PlayerAPI
     {
         return false;
     }
+
+    public String state()
+    {
+        return "stop";
+    }
+
+    public String filename()
+    {
+        return "";
+    }
+
+    public String artist()
+    {
+        return "";
+    }
+
+    public String album()
+    {
+        return "";
+    }
+
+    public int trackNo()
+    {
+        return 0;
+    }
+
+    public String track()
+    {
+        return "";
+    }
+
+    public int trackLength()
+    {
+        return 0;
+    }
 }
