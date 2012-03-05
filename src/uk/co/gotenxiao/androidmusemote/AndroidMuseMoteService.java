@@ -31,6 +31,7 @@ public class AndroidMuseMoteService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startid)
     {
+        startServer();
         return START_STICKY;
     }
 

@@ -118,6 +118,11 @@ public class MPDServerWorker extends Thread
         }
     }
 
+    private void sendServerStop()
+    {
+        mContext.stopService(new Intent(mContext, AndroidMuseMoteService.class));
+    }
+
     private void error(int error_num, int command_num, String command, String message)
     {
         String msg = String.format(PROTO_MPD_ACK, error_num, command_num, command, message);
@@ -265,7 +270,7 @@ public class MPDServerWorker extends Thread
         } else if (command.equals(PROTO_MPD_KILL))
         {
             send(PROTO_MPD_OK, true);
-            mServer.close();
+            sendServerStop();
             return true;
         } else if (command.equals(PROTO_MPD_COMMAND_LIST_OK_BEGIN))
         {
