@@ -96,7 +96,7 @@ public class MPDServerWorker extends Thread
         mContext = context;
         mSocket = socket;
         mCommandStack = new ArrayDeque<String>();
-        mPlayerAPI = new PowerAMP();
+        mPlayerAPI = new PowerAMP(mContext);
     }
 
     public void close()
@@ -345,23 +345,23 @@ public class MPDServerWorker extends Thread
             handleCurrentSong();
         } else if (mCommand.equals(PROTO_MPD_PLAY))
         {
-            mPlayerAPI.play(mContext);
+            mPlayerAPI.play();
             ok();
         } else if (mCommand.equals(PROTO_MPD_PAUSE))
         {
-            mPlayerAPI.pause(mContext);
+            mPlayerAPI.pause();
             ok();
         } else if (mCommand.equals(PROTO_MPD_NEXT))
         {
-            mPlayerAPI.next(mContext);
+            mPlayerAPI.next();
             ok();
         } else if (mCommand.equals(PROTO_MPD_PREVIOUS))
         {
-            mPlayerAPI.previous(mContext);
+            mPlayerAPI.previous();
             ok();
         } else if (mCommand.equals(PROTO_MPD_STOP))
         {
-            mPlayerAPI.stop(mContext);
+            mPlayerAPI.stop();
             ok();
         } else
         {
