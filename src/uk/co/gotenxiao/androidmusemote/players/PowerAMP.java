@@ -9,51 +9,80 @@ public class PowerAMP implements PlayerAPI
 {
     static final String ACTION_API_COMMAND = "com.maxmpz.audioplayer.API_COMMAND";
 
-    public void play(Context context)
+    private Context mContext;
+
+    private Intent mPlayIntent;
+    private Intent mPauseIntent;
+    private Intent mPreviousIntent;
+    private Intent mNextIntent;
+    private Intent mStopIntent;
+
+    public PowerAMP(Context context)
     {
-        context.startService(
+        mContext = context;
+
+        mPlayIntent = (
             new Intent(PowerAMPiAPI.ACTION_API_COMMAND)
             .putExtra(PowerAMPiAPI.COMMAND, PowerAMPiAPI.Commands.TOGGLE_PLAY_PAUSE)
         );
-    }
-
-    public void pause(Context context)
-    {
-        context.startService(
+        mPauseIntent = (
             new Intent(PowerAMPiAPI.ACTION_API_COMMAND)
             .putExtra(PowerAMPiAPI.COMMAND, PowerAMPiAPI.Commands.PAUSE)
         );
-    }
-
-    public void previous(Context context)
-    {
-        context.startService(
+        mPreviousIntent = (
             new Intent(PowerAMPiAPI.ACTION_API_COMMAND)
             .putExtra(PowerAMPiAPI.COMMAND, PowerAMPiAPI.Commands.PREVIOUS)
         );
-    }
-
-    public void next(Context context)
-    {
-        context.startService(
+        mNextIntent = (
             new Intent(PowerAMPiAPI.ACTION_API_COMMAND)
             .putExtra(PowerAMPiAPI.COMMAND, PowerAMPiAPI.Commands.NEXT)
         );
-    }
-
-    public void stop(Context context)
-    {
-        context.startService(
+        mStopIntent = (
             new Intent(PowerAMPiAPI.ACTION_API_COMMAND)
             .putExtra(PowerAMPiAPI.COMMAND, PowerAMPiAPI.Commands.STOP)
         );
     }
 
-    public void random(Context context, boolean random)
+    public void play()
+    {
+        mContext.startService(mPlayIntent);
+    }
+
+    public void pause()
+    {
+        mContext.startService(mPauseIntent);
+    }
+
+    public void previous()
+    {
+        mContext.startService(mPreviousIntent);
+    }
+
+    public void next()
+    {
+        mContext.startService(mNextIntent);
+    }
+
+    public void stop()
+    {
+        mContext.startService(mStopIntent);
+    }
+
+    public void setRandom(boolean random)
     {
     }
 
-    public void repeat(Context context, boolean repeat)
+    public boolean random()
     {
+        return false;
+    }
+
+    public void setRepeat(boolean repeat)
+    {
+    }
+
+    public boolean repeat()
+    {
+        return false;
     }
 }
