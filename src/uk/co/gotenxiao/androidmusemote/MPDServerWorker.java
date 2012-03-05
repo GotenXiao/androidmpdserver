@@ -268,16 +268,16 @@ public class MPDServerWorker extends Thread
 
         if (mCommand.equals(PROTO_MPD_PING))
         {
-            send(PROTO_MPD_OK, true);
+            ok(true);
             return true;
         } else if (mCommand.equals(PROTO_MPD_CLOSE))
         {
-            send(PROTO_MPD_OK, true);
+            ok(true);
             close();
             return true;
         } else if (mCommand.equals(PROTO_MPD_KILL))
         {
-            send(PROTO_MPD_OK, true);
+            ok(true);
             sendServerStop();
             return true;
         } else if (mCommand.equals(PROTO_MPD_COMMAND_LIST_OK_BEGIN))
