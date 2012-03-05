@@ -172,7 +172,7 @@ public class MPDServerWorker extends Thread
         }
     }
 
-    private void ok()
+    private void ok(boolean flush)
     {
         if (mCommandListOK)
         {
@@ -185,7 +185,12 @@ public class MPDServerWorker extends Thread
             return;
         }
 
-        send(PROTO_MPD_OK);
+        send(PROTO_MPD_OK, flush);
+    }
+
+    private void ok()
+    {
+        ok(false);
     }
 
     private void handleStatus()
