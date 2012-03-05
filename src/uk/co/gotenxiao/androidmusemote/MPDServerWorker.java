@@ -80,6 +80,7 @@ public class MPDServerWorker extends Thread
 
     private SimpleStringSplitter mSplitter = new SimpleStringSplitter(' '); 
 
+    private String mCommand = null;
     private ArrayDeque<String> mCommandStack = null;
     // Are we currently processing the command stack?
     private boolean mProcessingCommandStack = false;
@@ -236,7 +237,7 @@ public class MPDServerWorker extends Thread
             Log.d(LOG_TAG, String.format("Received command: %s", line));
         }
 
-        String command = "";
+        mCommand = "";
         line = line.trim();
 
         if (mCommandStack.size() > 0 && !mProcessingCommandStack)
@@ -253,34 +254,34 @@ public class MPDServerWorker extends Thread
         mSplitter.setString(line);
         if (mSplitter.hasNext())
         {
-            command = mSplitter.next();
+            mCommand = mSplitter.next();
         } else
         {
             error(ACK_ERROR_UNKNOWN, "", String.format("unknown command \"%s\"", line));
             return false;
         }
 
-        if (command.equals(PROTO_MPD_PING))
+        if (mCommand.equals(PROTO_MPD_PING))
         {
             send(PROTO_MPD_OK, true);
             return true;
-        } else if (command.equals(PROTO_MPD_CLOSE))
+        } else if (mCommand.equals(PROTO_MPD_CLOSE))
         {
             send(PROTO_MPD_OK, true);
             close();
             return true;
-        } else if (command.equals(PROTO_MPD_KILL))
+        } else if (mCommand.equals(PROTO_MPD_KILL))
         {
             send(PROTO_MPD_OK, true);
             sendServerStop();
             return true;
-        } else if (command.equals(PROTO_MPD_COMMAND_LIST_OK_BEGIN))
+        } else if (mCommand.equals(PROTO_MPD_COMMAND_LIST_OK_BEGIN))
         {
             Log.d(LOG_TAG, PROTO_MPD_COMMAND_LIST_OK_BEGIN);
 
             mCommandStack.add(line);
             return true;
-        } else if (command.equals(PROTO_MPD_COMMAND_LIST_BEGIN))
+        } else if (mCommand.equals(PROTO_MPD_COMMAND_LIST_BEGIN))
         {
             Log.d(LOG_TAG, PROTO_MPD_COMMAND_LIST_BEGIN);
 
@@ -290,7 +291,7 @@ public class MPDServerWorker extends Thread
             }
             mCommandStack.add(line);
             return true;
-        } else if (command.equals(PROTO_MPD_COMMAND_LIST_END))
+        } else if (mCommand.equals(PROTO_MPD_COMMAND_LIST_END))
         {
             Log.d(LOG_TAG, "Processing queued commands");
 
@@ -323,7 +324,7 @@ public class MPDServerWorker extends Thread
             {
                 if (any_failed)
                 {
-                    error(ACK_ERROR_UNKNOWN, mCommandStackIndex, command, "");
+                    error(ACK_ERROR_UNKNOWN, mCommandStackIndex, mCommand, "");
                 }
             }
 
@@ -331,29 +332,29 @@ public class MPDServerWorker extends Thread
             mCommandListOK = false;
             mCommandStackIndex = 0;
             ok();
-        } else if (command.equals(PROTO_MPD_STATUS))
+        } else if (mCommand.equals(PROTO_MPD_STATUS))
         {
             handleStatus();
-        } else if (command.equals(PROTO_MPD_CURRENTSONG))
+        } else if (mCommand.equals(PROTO_MPD_CURRENTSONG))
         {
             handleCurrentSong();
-        } else if (command.equals(PROTO_MPD_PLAY))
+        } else if (mCommand.equals(PROTO_MPD_PLAY))
         {
             mPlayerAPI.play(mContext);
             ok();
-        } else if (command.equals(PROTO_MPD_PAUSE))
+        } else if (mCommand.equals(PROTO_MPD_PAUSE))
         {
             mPlayerAPI.pause(mContext);
             ok();
-        } else if (command.equals(PROTO_MPD_NEXT))
+        } else if (mCommand.equals(PROTO_MPD_NEXT))
         {
             mPlayerAPI.next(mContext);
             ok();
-        } else if (command.equals(PROTO_MPD_PREVIOUS))
+        } else if (mCommand.equals(PROTO_MPD_PREVIOUS))
         {
             mPlayerAPI.previous(mContext);
             ok();
-        } else if (command.equals(PROTO_MPD_STOP))
+        } else if (mCommand.equals(PROTO_MPD_STOP))
         {
             mPlayerAPI.stop(mContext);
             ok();
