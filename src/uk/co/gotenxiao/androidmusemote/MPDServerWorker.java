@@ -100,10 +100,12 @@ public class MPDServerWorker extends Thread
 
     public void close()
     {
+        Log.d(LOG_TAG, "Worker closing");
         try
         {
             if (mSocket != null && !mSocket.isClosed())
             {
+                Log.d(LOG_TAG, "Closing client socket");
                 mSocket.close();
             }
         }

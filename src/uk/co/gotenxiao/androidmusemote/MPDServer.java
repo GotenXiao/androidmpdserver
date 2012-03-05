@@ -89,6 +89,7 @@ public class MPDServer extends Thread
 
     public void addWorker(Socket client)
     {
+        Log.d(LOG_TAG, "Creating new worker");
         MPDServerWorker worker = new MPDServerWorker(this, mContext, client);
         mWorkers.add(worker);
         worker.start();
@@ -99,6 +100,7 @@ public class MPDServer extends Thread
      */
     public void removeWorker(MPDServerWorker worker)
     {
+        Log.d(LOG_TAG, "Removing worker");
         mWorkers.remove(worker);
     }
 }
