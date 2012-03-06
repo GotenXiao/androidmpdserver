@@ -188,6 +188,16 @@ public class MPDServerWorker extends Thread
         }
     }
 
+    private void sendField(String fieldName, int value)
+    {
+        send("%s%s%d", fieldName, PROTO_MPD_DELIMITER, value);
+    }
+
+    private void sendField(String fieldName, String value)
+    {
+        send("%s%s%s", fieldName, PROTO_MPD_DELIMITER, value);
+    }
+
     private void ok(boolean flush)
     {
         if (mCommandListOK)
