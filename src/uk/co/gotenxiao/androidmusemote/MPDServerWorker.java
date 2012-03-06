@@ -163,7 +163,7 @@ public class MPDServerWorker extends Thread
     {
         try
         {
-            message += "\n";
+            message += '\n';
             Log.d(LOG_TAG, String.format("Sending message: %s", message));
             mBufSend.writeBytes(message);
         }
@@ -249,12 +249,43 @@ public class MPDServerWorker extends Thread
 
     private void handleCurrentSong()
     {
-        sendField(PROTO_MPD_FILE, mPlayerAPI.filename());
-        sendField(PROTO_MPD_TRACK_LENGTH, mPlayerAPI.trackLength());
-        sendField(PROTO_MPD_ARTIST, mPlayerAPI.artist());
-        sendField(PROTO_MPD_TITLE, mPlayerAPI.track());
-        sendField(PROTO_MPD_ALBUM, mPlayerAPI.album());
-        sendField(PROTO_MPD_TRACK, mPlayerAPI.trackNo());
+        String filename = mPlayerAPI.filename();
+        int trackLength = mPlayerAPI.trackLength();
+        String artist = mPlayerAPI.artist();
+        String track = mPlayerAPI.track();
+        String album = mPlayerAPI.album();
+        int trackNo = mPlayerAPI.trackNo();
+
+        if (!filename.equals(""))
+        {
+            sendField(PROTO_MPD_FILE, mPlayerAPI.filename());
+        }
+
+        if (trackLength != 0)
+        {
+            sendField(PROTO_MPD_TRACK_LENGTH, mPlayerAPI.trackLength());
+        }
+
+        if (!artist.equals(""))
+        {
+            sendField(PROTO_MPD_ARTIST, mPlayerAPI.artist());
+        }
+
+        if (!track.equals(""))
+        {
+            sendField(PROTO_MPD_TITLE, mPlayerAPI.track());
+        }
+
+        if (!album.equals(""))
+        {
+            sendField(PROTO_MPD_ALBUM, mPlayerAPI.album());
+        }
+
+        if (trackNo != 0)
+        {
+            sendField(PROTO_MPD_TRACK, mPlayerAPI.trackNo());
+        }
+
         sendField(PROTO_MPD_POS, 0);
         sendField(PROTO_MPD_ID, 0);
         ok();
