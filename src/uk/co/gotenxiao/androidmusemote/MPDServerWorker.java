@@ -407,7 +407,7 @@ public class MPDServerWorker extends Thread
                 mSocket.getOutputStream()
             );
 
-            send(PROTO_MPD_HANDSHAKE);
+            send(PROTO_MPD_HANDSHAKE, true);
 
             while (running)
             {
