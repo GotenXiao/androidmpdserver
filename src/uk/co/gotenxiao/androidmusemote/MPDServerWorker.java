@@ -297,12 +297,10 @@ public class MPDServerWorker extends Thread
             return true;
         } else if (mCommand.equals(PROTO_MPD_CLOSE))
         {
-            ok(true);
             close();
             return true;
         } else if (mCommand.equals(PROTO_MPD_KILL))
         {
-            ok(true);
             sendServerStop();
             return true;
         } else if (mCommand.equals(PROTO_MPD_COMMAND_LIST_OK_BEGIN))
