@@ -222,42 +222,36 @@ public class MPDServerWorker extends Thread
     private void handleStatus()
     {
         int volume = 0;
-        int repeat = 0;
-        int random = 0;
         int single = 0;
         int consume = 0;
         int playlist = 0;
         int playlist_length = 0;
         int crossfade = 0;
-        String state = "stop";
         int songid = 0;
 
-        send(String.format("%s: %d", PROTO_MPD_VOLUME, volume));
-        send(String.format("%s: %d", PROTO_MPD_REPEAT, repeat));
-        send(String.format("%s: %d", PROTO_MPD_RANDOM, random));
-        send(String.format("%s: %d", PROTO_MPD_SINGLE, single));
-        send(String.format("%s: %d", PROTO_MPD_CONSUME, consume));
-        send(String.format("%s: %d", PROTO_MPD_PLAYLIST, playlist));
-        send(String.format("%s: %d", PROTO_MPD_PLAYLIST_LENGTH, playlist_length));
-        send(String.format("%s: %d", PROTO_MPD_CROSSFADE, crossfade));
-        send(String.format("%s: %s", PROTO_MPD_STATE, state));
-        send(String.format("%s: %d", PROTO_MPD_SONGID, songid));
+        sendField(PROTO_MPD_VOLUME, volume);
+        sendField(PROTO_MPD_REPEAT, mPlayerAPI.repeat());
+        sendField(PROTO_MPD_RANDOM, mPlayerAPI.random());
+        sendField(PROTO_MPD_SINGLE, single);
+        sendField(PROTO_MPD_CONSUME, consume);
+        sendField(PROTO_MPD_PLAYLIST, playlist);
+        sendField(PROTO_MPD_PLAYLIST_LENGTH, playlist_length);
+        sendField(PROTO_MPD_CROSSFADE, crossfade);
+        sendField(PROTO_MPD_STATE, mPlayerAPI.state());
+        sendField(PROTO_MPD_SONGID, songid);
         ok();
     }
 
     private void handleCurrentSong()
     {
-        String file = "";
-        String title = "";
-        String name = "";
-        int pos = 0;
-        int id = 0;
-
-        send(String.format("%s: %s", PROTO_MPD_FILE, file));
-        send(String.format("%s: %s", PROTO_MPD_TITLE, title));
-        send(String.format("%s: %s", PROTO_MPD_NAME, name));
-        send(String.format("%s: %d", PROTO_MPD_POS, pos));
-        send(String.format("%s: %d", PROTO_MPD_ID, id));
+        sendField(PROTO_MPD_FILE, mPlayerAPI.filename());
+        sendField(PROTO_MPD_TRACK_LENGTH, mPlayerAPI.trackLength());
+        sendField(PROTO_MPD_ARTIST, mPlayerAPI.artist());
+        sendField(PROTO_MPD_TITLE, mPlayerAPI.track());
+        sendField(PROTO_MPD_ALBUM, mPlayerAPI.album());
+        sendField(PROTO_MPD_TRACK, mPlayerAPI.trackNo());
+        sendField(PROTO_MPD_POS, 0);
+        sendField(PROTO_MPD_ID, 0);
         ok();
     }
 
