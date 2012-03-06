@@ -35,6 +35,10 @@ public class MPDServerWorker extends Thread
     static final int ACK_ERROR_EXIST = 56;
 
     static final String PROTO_MPD_ACK = "ACK [%d@%d] {%s} %s";
+    static final String PROTO_MPD_ALBUM = "Album";
+    static final String PROTO_MPD_ARTIST = "Artist";
+    static final String PROTO_MPD_AUDIO = "audio";
+    static final String PROTO_MPD_BITRATE = "bitrate";
     static final String PROTO_MPD_CLOSE = "close";
     static final String PROTO_MPD_COMMAND_LIST_BEGIN = "command_list_begin";
     static final String PROTO_MPD_COMMAND_LIST_END = "command_list_end";
@@ -43,13 +47,22 @@ public class MPDServerWorker extends Thread
     static final String PROTO_MPD_CONSUME = "consume";
     static final String PROTO_MPD_CROSSFADE = "crossfade";
     static final String PROTO_MPD_CURRENTSONG = "currentsong";
+    static final String PROTO_MPD_DATE = "Date";
+    static final String PROTO_MPD_DELIMITER = ": ";
+    static final String PROTO_MPD_ELAPSED = "elapsed";
     static final String PROTO_MPD_FILE = "file";
+    static final String PROTO_MPD_GENRE = "Genre";
     static final String PROTO_MPD_HANDSHAKE = "OK MPD 0.16.0";
     static final String PROTO_MPD_ID = "Id";
     static final String PROTO_MPD_KILL = "kill";
+    static final String PROTO_MPD_LAST_MODIFIED = "Last-Modified";
     static final String PROTO_MPD_LIST_OK = "list_OK";
+    static final String PROTO_MPD_MIXRAMPDB = "mixrampdb";
+    static final String PROTO_MPD_MIXRAMPDELAY = "mixrampdelay";
     static final String PROTO_MPD_NAME = "Name";
     static final String PROTO_MPD_NEXT = "next";
+    static final String PROTO_MPD_NEXTSONGID = "nextsongid";
+    static final String PROTO_MPD_NEXTSONG = "nextsong";
     static final String PROTO_MPD_NOTCOMMANDS = "notcommands";
     static final String PROTO_MPD_OK = "OK";
     static final String PROTO_MPD_PAUSE = "pause";
@@ -69,7 +82,10 @@ public class MPDServerWorker extends Thread
     static final String PROTO_MPD_STATUS = "status";
     static final String PROTO_MPD_STOP = "stop";
     static final String PROTO_MPD_TITLE = "Title";
+    static final String PROTO_MPD_TRACK_LENGTH = "Time";
+    static final String PROTO_MPD_TRACK = "Track";
     static final String PROTO_MPD_VOLUME = "volume";
+    static final String PROTO_MPD_XFADE = "xfade";
 
     private MPDServer mServer = null;
     private Context mContext = null;
