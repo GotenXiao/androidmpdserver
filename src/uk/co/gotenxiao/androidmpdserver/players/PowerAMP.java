@@ -1,4 +1,4 @@
-package uk.co.gotenxiao.androidmusemote.players;
+package uk.co.gotenxiao.androidmpdserver.players;
 
 import com.maxmpz.audioplayer.player.PowerAMPiAPI;
 
@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class PowerAMP implements PlayerAPI
 {
-    static final String LOG_TAG = "AndroidMuseMote";
+    static final String LOG_TAG = "AndroidMPDServer";
     static final String ACTION_API_COMMAND = "com.maxmpz.audioplayer.API_COMMAND";
 
     private Context mContext;

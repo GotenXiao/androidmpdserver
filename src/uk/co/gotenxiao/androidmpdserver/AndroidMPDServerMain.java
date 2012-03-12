@@ -1,4 +1,4 @@
-package uk.co.gotenxiao.androidmusemote;
+package uk.co.gotenxiao.androidmpdserver;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ToggleButton;
 
-public class AndroidMuseMoteMain extends Activity implements OnClickListener
+public class AndroidMPDServerMain extends Activity implements OnClickListener
 {
-    private static final String LOG_TAG = "AndroidMuseMote";
+    private static final String LOG_TAG = "AndroidMPDServer";
     private ToggleButton toggleButton = null;
-    private AndroidMuseMoteService mService = null;
+    private AndroidMPDServerService mService = null;
     private boolean mIsBound = false;
 
     private Intent mServiceIntent = null;
@@ -25,7 +25,7 @@ public class AndroidMuseMoteMain extends Activity implements OnClickListener
     {
         public void onServiceConnected(ComponentName className, IBinder service)
         {
-            mService = ((AndroidMuseMoteService.LocalBinder)service).getService();
+            mService = ((AndroidMPDServerService.LocalBinder)service).getService();
             updateButtonChecked();
         }
 
@@ -57,7 +57,7 @@ public class AndroidMuseMoteMain extends Activity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mServiceIntent = new Intent(this, AndroidMuseMoteService.class);
+        mServiceIntent = new Intent(this, AndroidMPDServerService.class);
 
         toggleButton = (ToggleButton) findViewById(R.id.button);
         toggleButton.setOnClickListener(this);

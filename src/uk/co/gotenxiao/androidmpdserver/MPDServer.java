@@ -1,4 +1,4 @@
-package uk.co.gotenxiao.androidmusemote;
+package uk.co.gotenxiao.androidmpdserver;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class MPDServer extends Thread
 {
-    static final String LOG_TAG = "AndroidMuseMote";
+    static final String LOG_TAG = "AndroidMPDServer";
 
     private ServerSocket mServer = null;
     private Context mContext = null;

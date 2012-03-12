@@ -1,4 +1,4 @@
-package uk.co.gotenxiao.androidmusemote;
+package uk.co.gotenxiao.androidmpdserver;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -9,9 +9,9 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-public class AndroidMuseMoteService extends Service
+public class AndroidMPDServerService extends Service
 {
-    private static final String LOG_TAG = "AndroidMuseMote";
+    private static final String LOG_TAG = "AndroidMPDServer";
     private int NOTIFICATION = R.string.server_running;
 
     MPDServer server = null;
@@ -44,9 +44,9 @@ public class AndroidMuseMoteService extends Service
 
     public class LocalBinder extends Binder
     {
-        AndroidMuseMoteService getService()
+        AndroidMPDServerService getService()
         {
-            return AndroidMuseMoteService.this;
+            return AndroidMPDServerService.this;
         }
     }
     private final IBinder mBinder = new LocalBinder();
@@ -56,7 +56,7 @@ public class AndroidMuseMoteService extends Service
         CharSequence text = getText(NOTIFICATION);
         Notification notification = new Notification(R.drawable.ic_stat_mpd_server, text, 0);
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, AndroidMuseMoteMain.class), 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, AndroidMPDServerMain.class), 0);
         notification.setLatestEventInfo(this, text, "", contentIntent);
         startForeground(NOTIFICATION, notification);
     }

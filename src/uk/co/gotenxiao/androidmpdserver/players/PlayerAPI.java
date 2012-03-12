@@ -1,4 +1,4 @@
-package uk.co.gotenxiao.androidmusemote.players;
+package uk.co.gotenxiao.androidmpdserver.players;
 
 import android.content.Context;
 

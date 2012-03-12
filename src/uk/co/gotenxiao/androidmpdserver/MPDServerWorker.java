@@ -1,4 +1,4 @@
-package uk.co.gotenxiao.androidmusemote;
+package uk.co.gotenxiao.androidmpdserver;
 
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -12,14 +12,14 @@ import android.content.Context;
 import android.text.TextUtils.SimpleStringSplitter;
 import android.util.Log;
 
-import uk.co.gotenxiao.androidmusemote.players.PlayerAPI;
-import uk.co.gotenxiao.androidmusemote.players.PowerAMP;
+import uk.co.gotenxiao.androidmpdserver.players.PlayerAPI;
+import uk.co.gotenxiao.androidmpdserver.players.PowerAMP;
 
 import java.util.ArrayList;
 
 public class MPDServerWorker extends Thread
 {
-    static final String LOG_TAG = "AndroidMuseMote";
+    static final String LOG_TAG = "AndroidMPDServer";
 
     static final int ACK_ERROR_NOT_LIST = 1;
     static final int ACK_ERROR_ARG = 2;
@@ -139,7 +139,7 @@ public class MPDServerWorker extends Thread
 
     private void sendServerStop()
     {
-        mContext.stopService(new Intent(mContext, AndroidMuseMoteService.class));
+        mContext.stopService(new Intent(mContext, AndroidMPDServerService.class));
     }
 
     private void error(int error_num, int command_num, String command, String message)
